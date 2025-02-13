@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -122,4 +123,28 @@ public partial class MainWindow : Window
         gameTimer.Stop();
         MessageBox.Show("Game Over! - nacisnij Enter aby restartować");
     }
+
+    private void Window_KeyDown(object sender, KeyEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case Key.Left when currentDirection.X != 1:
+                currentDirection = new Point(-1, 0);
+                break;
+            case Key.Right when currentDirection.X != -1:
+                currentDirection = new Point(1, 0);
+                break;
+            case Key.Up when currentDirection.Y != 1:
+                currentDirection = new Point(0, -1);
+                break;
+            case Key.Down when currentDirection.Y != -1:
+                currentDirection = new Point(0, 1);
+                break;
+            case Key.Enter when gameOver:
+                StartNewGame();
+                break;
+        }
+
+    }
+
 }
