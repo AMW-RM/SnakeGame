@@ -1,6 +1,9 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
+
 
 namespace SnakeGame;
 
@@ -86,7 +89,31 @@ public partial class MainWindow : Window
 
     private void Draw()
     {
-       
+        GameBoard.Children.Clear();
+        //rysujemy węża
+        foreach (var part in SnakeParts)
+        {
+            var rect = new Rectangle
+            {
+                Width = SquarSize - 1,
+                Height = SquarSize - 1,
+                Fill = Brushes.Green
+            };
+            Canvas.SetLeft(rect, part.X * SquarSize);
+            Canvas.SetTop(rect, part.Y * SquarSize);
+            GameBoard.Children.Add(rect);
+        }
+
+        //rysujemy jedzenie
+        var foodsape = new Ellipse
+        {
+            Width = SquarSize,
+            Height = SquarSize,
+            Fill = Brushes.Yellow
+        };
+        Canvas.SetLeft(foodsape, food.X * SquarSize);
+        Canvas.SetTop(foodsape, food.Y * SquarSize);
+        GameBoard.Children.Add(foodsape);
     }
 
     private void GameOver()
