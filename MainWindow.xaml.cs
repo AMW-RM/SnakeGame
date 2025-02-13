@@ -118,6 +118,8 @@ public partial class MainWindow : Window
 
     private void GameOver()
     {
-        throw new NotImplementedException();
+        gameOver = true;
+        gameTimer.Stop();
+        MessageBox.Show("Game Over! - nacisnij Enter aby restartować");
     }
 }
