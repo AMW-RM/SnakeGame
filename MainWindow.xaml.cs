@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace SnakeGame;
@@ -47,7 +48,7 @@ public partial class MainWindow : Window
 
     private void CreateFood()
     {
-       Random rnd = new Random();
+        Random rnd = new Random();
 
         do
         {
@@ -56,6 +57,39 @@ public partial class MainWindow : Window
     }
 
     private void GameLoop(object? sender, EventArgs e)
+    {
+        if (gameOver) //(gameOver == true)
+            return;
+        //obliczanie pozycji głowy węza
+        var newHead = new Point((SnakeParts[0].X + currentDirection.X + GameWidth) % GameWidth,
+            (SnakeParts[0].Y + currentDirection.Y + GameHeight) % GameHeight);
+        //sprawdzanie kolizji z samym sobą
+        if (SnakeParts.Contains(newHead))
+        {
+            GameOver();
+            return;
+        };
+        //dodanie nowej glowy
+        SnakeParts.Insert(0, newHead);
+        //sprawdzanie czy zjadł jedzenie
+        if (newHead.Equals(food))
+        {
+            CreateFood();
+
+        }
+        else
+        {
+            SnakeParts.RemoveAt(SnakeParts.Count - 1);
+        }
+        Draw();
+    }
+
+    private void Draw()
+    {
+       
+    }
+
+    private void GameOver()
     {
         throw new NotImplementedException();
     }
