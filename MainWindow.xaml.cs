@@ -13,12 +13,12 @@ public partial class MainWindow : Window
     private readonly int SquarSize = 20;
 
     //private readonly List<Point> SnakeParts = new List<Point>();
-    private readonly List<Point> SnakeParts = new ();//waz lista składowych
+    private readonly List<Point> SnakeParts = new();//waz lista składowych
     private Point food; // jedzenie
     private Point currentDirection; //kierunek
     private bool gameOver; //koniec gry
-    private DispatcherTimer gameTimer; //czas gry, wątki graficzne obsługa działa na tym samym watku co user
-   
+    private DispatcherTimer gameTimer = new(); //czas gry, wątki graficzne obsługa działa na tym samym watku co user
+
     public MainWindow()
     {
         InitializeComponent();
@@ -26,17 +26,25 @@ public partial class MainWindow : Window
         GameBoard.Width = GameWidth * SquarSize;
         GameBoard.Height = GameHeight * SquarSize;
         //ustawienie timera i nterval 200ms, pętla 
-        gameTimer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromMilliseconds(200)
-        };
+        gameTimer.Interval = TimeSpan.FromMilliseconds(200);
         gameTimer.Tick += GameLoop;
 
         StartNewGame();
-
     }
 
     private void StartNewGame()
+    {
+        SnakeParts.Clear();
+        gameOver = false;
+
+        SnakeParts.Add(new Point(GameWidth / 2, GameHeight / 2));// srodek gry
+        currentDirection = new Point(1, 0); //ustawienie kierunku w prawo.
+
+        CreateFood();
+        gameTimer.Start();
+    }
+
+    private void CreateFood()
     {
         throw new NotImplementedException();
     }
