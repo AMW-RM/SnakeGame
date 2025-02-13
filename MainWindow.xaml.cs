@@ -42,11 +42,17 @@ public partial class MainWindow : Window
 
         CreateFood();
         gameTimer.Start();
+
     }
 
     private void CreateFood()
     {
-        throw new NotImplementedException();
+       Random rnd = new Random();
+
+        do
+        {
+            food = new Point(rnd.Next(GameWidth), rnd.Next(GameHeight));
+        } while (SnakeParts.Contains(food));
     }
 
     private void GameLoop(object? sender, EventArgs e)
