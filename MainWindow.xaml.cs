@@ -1,24 +1,48 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System.Windows.Threading;
 
-namespace SnakeGame
+namespace SnakeGame;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private readonly int GameWidth = 20;
+    private readonly int GameHeight = 20;
+    private readonly int SquarSize = 20;
+
+    //private readonly List<Point> SnakeParts = new List<Point>();
+    private readonly List<Point> SnakeParts = new ();//waz lista składowych
+    private Point food; // jedzenie
+    private Point currentDirection; //kierunek
+    private bool gameOver; //koniec gry
+    private DispatcherTimer gameTimer; //czas gry, wątki graficzne obsługa działa na tym samym watku co user
+   
+    public MainWindow()
     {
-        public MainWindow()
+        InitializeComponent();
+        //inicjalizacja planszy
+        GameBoard.Width = GameWidth * SquarSize;
+        GameBoard.Height = GameHeight * SquarSize;
+        //ustawienie timera i nterval 200ms, pętla 
+        gameTimer = new DispatcherTimer
         {
-            InitializeComponent();
-        }
+            Interval = TimeSpan.FromMilliseconds(200)
+        };
+        gameTimer.Tick += GameLoop;
+
+        StartNewGame();
+
+    }
+
+    private void StartNewGame()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void GameLoop(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }
