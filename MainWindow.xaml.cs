@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Formats.Asn1.AsnWriter;
 
 
 namespace SnakeGame;
@@ -23,6 +24,8 @@ public partial class MainWindow : Window
     private Point currentDirection; //kierunek
     private bool gameOver; //koniec gry
     private DispatcherTimer gameTimer = new(); //czas gry, wątki graficzne obsługa działa na tym samym watku co user
+    private TextBlock scoreText;
+    private int score;
 
     public MainWindow()
     {
@@ -33,6 +36,13 @@ public partial class MainWindow : Window
         //ustawienie timera i nterval 200ms, pętla 
         gameTimer.Interval = TimeSpan.FromMilliseconds(200);
         gameTimer.Tick += GameLoop;
+        scoreText = new TextBlock
+        {
+            FontSize = 16,
+            Foreground = Brushes.White,
+            Margin = new Thickness(10)
+        };
+        GameBoard.Children.Add(scoreText);
 
         StartNewGame();
     }
@@ -41,11 +51,12 @@ public partial class MainWindow : Window
     {
         SnakeParts.Clear();
         gameOver = false;
-
+        score = 0;
         SnakeParts.Add(new Point(GameWidth / 2, GameHeight / 2));// srodek gry
         currentDirection = new Point(1, 0); //ustawienie kierunku w prawo.
 
         CreateFood();
+        UpdateScore();
         gameTimer.Start();
 
     }
@@ -78,6 +89,7 @@ public partial class MainWindow : Window
         //sprawdzanie czy zjadł jedzenie
         if (newHead.Equals(food))
         {
+            score++;
             CreateFood();
 
         }
@@ -85,12 +97,17 @@ public partial class MainWindow : Window
         {
             SnakeParts.RemoveAt(SnakeParts.Count - 1);
         }
+        UpdateScore();  
         Draw();
     }
-
+    private void UpdateScore()
+    {
+        scoreText.Text = $"Score: {score}";
+    }
     private void Draw()
     {
         GameBoard.Children.Clear();
+        GameBoard.Children.Add(scoreText);
         //rysujemy węża
         foreach (var part in SnakeParts)
         {
@@ -121,6 +138,7 @@ public partial class MainWindow : Window
     {
         gameOver = true;
         gameTimer.Stop();
+        MessageBox.Show($"Twoje punkty: {score}");
         MessageBox.Show("Game Over! - nacisnij Enter aby restartować");
     }
 
