@@ -75,9 +75,38 @@ public partial class MainWindow : Window
     {
         if (gameOver) //(gameOver == true)
             return;
-        //obliczanie pozycji głowy węza
+        //obliczanie pozycji głowy węza - wersja przenikania
+        /*
         var newHead = new Point((SnakeParts[0].X + currentDirection.X + GameWidth) % GameWidth,
             (SnakeParts[0].Y + currentDirection.Y + GameHeight) % GameHeight);
+        */
+        //obliczanie pozycji głowy węza - kolizja z krawędzią, koniec gry
+        /*
+        var newHead = new Point(SnakeParts[0].X + currentDirection.X,
+            SnakeParts[0].Y + currentDirection.Y);
+        // Sprawdzenie kolizji z krawędziami
+        if (newHead.X < 0 || newHead.X >= GameWidth || newHead.Y < 0 || newHead.Y >= GameHeight)
+        {
+            GameOver();
+            return;
+        }
+        */
+        //obliczanie pozycji głowy węza - wersja odbicie od sciany
+        var newHead = new Point(SnakeParts[0].X + currentDirection.X, SnakeParts[0].Y + currentDirection.Y);
+        // Sprawdzenie kolizji z krawędziami i odbicie
+        if (newHead.X < 0 || newHead.X >= GameWidth)
+        {
+            currentDirection = new Point(-currentDirection.X, currentDirection.Y); // Odbicie w poziomie
+            newHead = new Point(SnakeParts[0].X + currentDirection.X, SnakeParts[0].Y); // Przesunięcie w przeciwnym kierunku
+        }
+
+        if (newHead.Y < 0 || newHead.Y >= GameHeight)
+        {
+            currentDirection = new Point(currentDirection.X, -currentDirection.Y); // Odbicie w pionie
+            newHead = new Point(SnakeParts[0].X, SnakeParts[0].Y + currentDirection.Y); // Przesunięcie w przeciwnym kierunku
+        }
+
+
         //sprawdzanie kolizji z samym sobą
         if (SnakeParts.Contains(newHead))
         {
