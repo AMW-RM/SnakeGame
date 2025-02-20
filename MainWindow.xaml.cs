@@ -105,7 +105,7 @@ public partial class MainWindow : Window
             currentDirection = new Point(currentDirection.X, -currentDirection.Y); // Odbicie w pionie
             newHead = new Point(SnakeParts[0].X, SnakeParts[0].Y + currentDirection.Y); // Przesunięcie w przeciwnym kierunku
         }
-
+        //ddddd
 
         //sprawdzanie kolizji z samym sobą
         if (SnakeParts.Contains(newHead))
