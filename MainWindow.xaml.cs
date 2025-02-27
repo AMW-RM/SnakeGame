@@ -19,9 +19,9 @@ public partial class MainWindow : Window
     private readonly int SquarSize = 20;
 
     //private readonly List<Point> SnakeParts = new List<Point>();
-    private readonly List<Point> SnakeParts = new();//waz lista składowych
+   //waz lista składowych
     private Point food; // jedzenie
-    private Point currentDirection; //kierunek
+     //kierunek
     private bool gameOver; //koniec gry
     private DispatcherTimer gameTimer = new(); //czas gry, wątki graficzne obsługa działa na tym samym watku co user
     private TextBlock scoreText;
