@@ -2,7 +2,7 @@
 
 namespace SnakeGame.Core.Interfaces;
 
-internal interface IFoodGenerator
+public interface IFoodGenerator
 {
     Position GenerateFood(IGameState gameState);
 }

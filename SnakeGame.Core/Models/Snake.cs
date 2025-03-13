@@ -1,6 +1,6 @@
 ﻿namespace SnakeGame.Core.Models
 {
-    internal class Snake
+    public class Snake
     {
         private readonly List<Position> _snakeParts = new();
         public IReadOnlyList<Position> Parts => _snakeParts;

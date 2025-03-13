@@ -2,12 +2,15 @@
 
 namespace SnakeGame.Core.Interfaces;
 
-internal interface IGameState
+public interface IGameState
 {
     Snake Snake { get; }
     Position Food { get; }
     bool IsGameOver { get; }
     int GameBoardWidth { get; } 
     int GameBoardHeight { get; }
+    void Reset();
+    void SetGameOver();
+    void SetFood(Position food);
 
 }

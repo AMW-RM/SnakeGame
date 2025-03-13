@@ -1,9 +1,8 @@
 ﻿namespace SnakeGame.Core.Interfaces;
 
-internal interface IGameReander
+public interface IGameReander
 {
     void Clear();
     void Reander(IGameState gameState);
 
-    
 }
