@@ -1,27 +1,26 @@
 ﻿using SnakeGame.Core.Interfaces;
 using SnakeGame.Core.Models;
-using System.Drawing;
 
 namespace SnakeGame.Core.Game;
 
-internal class GameState : IGameState
+public class GameState : IGameState
 {
     public Snake Snake { get; private set; }
     public Position Food { get; private set; }
     public bool IsGameOver { get; private set; }
-    public int GameBoardWidth { get; private set; }
-    public int GameBoardHeight { get; private set; }
+    public int GameBoardWidth { get; }
+    public int GameBoardHeight { get; }
 
-    public GameState(int widht, int height)
+       public GameState(int width, int height)
     {
-        GameBoardWidth = widht;
+        GameBoardWidth = width;
         GameBoardHeight = height;
-
-        InitializationGame();
+        InitializeGame();
     }
+
     public void Reset()
     {
-        InitializationGame();
+        InitializeGame();
     }
 
     public void SetFood(Position food)
@@ -33,10 +32,12 @@ internal class GameState : IGameState
     {
         IsGameOver = true;
     }
-        private void InitializationGame()
-    {
-        Snake = new Snake(new Position(GameBoardWidth / 2, GameBoardHeight / 2), Direction.Down);
-        IsGameOver = false;
 
+    private void InitializeGame()
+    {
+        Snake = new Snake(new Position(GameBoardWidth / 2, GameBoardHeight / 2),
+            Direction.Right
+        );
+        IsGameOver = false;
     }
-    }
+}

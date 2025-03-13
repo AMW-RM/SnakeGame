@@ -8,7 +8,7 @@ internal class RandomFoodGenerator : IFoodGenerator
     private readonly Random _random = new Random();
     //private readonly Random _random = new ();
 
-    public Position GenerateFood(IGameState gameState)
+    public Position GenerateFood(Interfaces.IGameState gameState)
     {
         Position food;
 

@@ -5,20 +5,21 @@ namespace SnakeGame.Core.Game;
 
 public class GameEngine
 {
-    private readonly IGameState _gameState;
+    private readonly Interfaces.IGameState _gameState;
     private readonly IGameReander _gameReander;
     private readonly IFoodGenerator _foodGenerator;
     private readonly IGameLoop _gameLoop;
+    private readonly IGameNotifications _gameNotifications;
 
-    public GameEngine(IGameState gameState,
+    public GameEngine(Interfaces.IGameState gameState,
         IGameReander gameReander,
         IFoodGenerator foodGenerator,
-        IGameLoop gameLoop)
+        IGameNotifications gameNotifications)
     {
         _gameState = gameState;
         _gameReander = gameReander;
         _foodGenerator = foodGenerator;
-        _gameLoop = gameLoop;
+        _gameNotifications = gameNotifications;
     }
 
     public void Update()
@@ -26,6 +27,7 @@ public class GameEngine
         if (_gameState.IsGameOver)
         {
             _gameLoop.Stop();
+            _gameNotifications.OnGameOver();
             _gameState.Reset();
             return;
         }
@@ -50,11 +52,29 @@ public class GameEngine
         _gameReander.Reander(_gameState);
     }
 
+    public void Reset()
+    {
+        _gameState.Reset();
+        GenerateNewFood();
+    }
+
+    public void ChangeDirection(Direction newDirection)
+    {
+        var currentDirection = _gameState.Snake.CurrentDirection;
+        if (newDirection.GetOpposite().DeltaX != currentDirection.DeltaX ||
+            newDirection.GetOpposite().DeltaY != currentDirection.DeltaY)
+        {
+            _gameState.Snake.CurrentDirection = newDirection;
+        }
+    }
+
     private void GenerateNewFood()
     {
         var newFood = _foodGenerator.GenerateFood(_gameState);
         _gameState.SetFood(newFood);
     }
+
+
 
     private Position CalculateNewPosition(Position head, Direction currentDirection)
     {
